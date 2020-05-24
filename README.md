@@ -1,5 +1,3 @@
-"# School-Result-Marathi"
-
 # School Result(Marathi medium)
 
 This webapp can be used to create results for the students in your class. Just register and start creating results. You can even download the individual results in the form of a PDF. Even you can download one single PDF with all the results.
