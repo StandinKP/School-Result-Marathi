@@ -1,0 +1,256 @@
+{% extends 'layout.html' %} {% block body %}
+<div class="justify-content-center text-center">
+  <h1 class="display-4 mt-3 bg-light">{{ teacher.school_name }}</h1>
+</div>
+
+<div class="container mt-4 mb-2">
+  <form action="" method="post">
+    <div>
+      <span class="form-group mb-3">
+        <span class="input-group input-group alternative">
+          <span class="input-group-text" style="height: 17px;"
+            >विद्यार्थाचे नाव:</span
+          >
+          <input
+            type="text"
+            class="form-control"
+            value="{{ student.name }}"
+            readonly
+          />
+        </span>
+      </span>
+    </div>
+
+    <div class="card mt-4">
+      <table>
+        <tr>
+          <td>
+            <table>
+              <tr>
+                <th class="srno">अ.क्र.</th>
+                <th class="subject">विषय</th>
+                <th class="grade">श्रेणी</th>
+              </tr>
+              <tr>
+                <td class="srno">१</td>
+                <td class="subject">मराठी</td>
+                <td class="grade">
+                  <div class="form-group mb-3">
+                    <div class="input-group input-group alternative">
+                      <input
+                        type="text"
+                        class="form-control"
+                        readonly
+                        name="marathi"
+                        value="{{ student.grade.0.marathi }}"
+                      />
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="srno">२</td>
+                <td class="subject">हिन्दी</td>
+                <td class="grade">
+                  <div class="form-group mb-3">
+                    <div class="input-group input-group alternative">
+                      <input
+                        type="text"
+                        class="form-control"
+                        readonly
+                        name="hindi"
+                        value="{{ student.grade.1.hindi }}"
+                      />
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="srno">३</td>
+                <td class="subject">इंग्रजी</td>
+                <td class="grade">
+                  <div class="form-group mb-3">
+                    <div class="input-group input-group alternative">
+                      <input
+                        type="text"
+                        class="form-control"
+                        readonly
+                        name="english"
+                        value="{{ student.grade.2.english }}"
+                      />
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="srno">४</td>
+                <td class="subject">गणित</td>
+                <td class="grade">
+                  <div class="form-group mb-3">
+                    <div class="input-group input-group alternative">
+                      <input
+                        type="text"
+                        class="form-control"
+                        readonly
+                        name="maths"
+                        value="{{ student.grade.3.maths }}"
+                      />
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="srno">५</td>
+                <td class="subject">परिसर अभ्यास १/सा. विज्ञान</td>
+                <td class="grade">
+                  <div class="form-group mb-3">
+                    <div class="input-group input-group alternative">
+                      <input
+                        type="text"
+                        class="form-control"
+                        readonly
+                        name="s_science"
+                        value="{{ student.grade.4.s_science }}"
+                      />
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="srno">६</td>
+                <td class="subject">परिसर अभ्यास २/सामाजिकशास्त्र</td>
+                <td class="grade">
+                  <div class="form-group mb-3">
+                    <div class="input-group input-group alternative">
+                      <input
+                        type="text"
+                        class="form-control"
+                        readonly
+                        name="sociology"
+                        value="{{ student.grade.5.sociology }}"
+                      />
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="srno">७</td>
+                <td class="subject">कला</td>
+                <td class="grade">
+                  <div class="form-group mb-3">
+                    <div class="input-group input-group alternative">
+                      <input
+                        type="text"
+                        class="form-control"
+                        readonly
+                        name="art"
+                        value="{{ student.grade.6.art }}"
+                      />
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="srno">८</td>
+                <td class="subject">कार्यानुभव</td>
+                <td class="grade">
+                  <div class="form-group mb-3">
+                    <div class="input-group input-group alternative">
+                      <input
+                        type="text"
+                        class="form-control"
+                        readonly
+                        name="work_experience"
+                        value="{{ student.grade.7.work_experience }}"
+                      />
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="srno">९</td>
+                <td class="subject">शा. शिक्षण व आरोग्य शिक्षण</td>
+                <td class="grade">
+                  <div class="form-group mb-3">
+                    <div class="input-group input-group alternative">
+                      <input
+                        type="text"
+                        class="form-control"
+                        readonly
+                        name="physical_edu"
+                        value="{{ student.grade.8.physical_edu }}"
+                      />
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </td>
+          <td>
+            <table>
+              <tr>
+                <th>वर्णनात्मक नोंदी</th>
+              </tr>
+              <tr>
+                <td>
+                  विशेष प्रगती
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <textarea name="" id="" cols="30" rows="5" readonly>
+{{ student.progress }}
+                  </textarea>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  आवड/ चंद (कला, क्रीडा, साहित्य)
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <textarea name="" id="" cols="30" rows="5" readonly>
+{{ student.improvements }}
+                  </textarea>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  सुधारण्या आवश्यक
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <textarea name="" id="" cols="30" rows="5" readonly>
+{{ student.improvements }}
+                  </textarea>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="form-group text-center">
+      <a href="{{ url_for('download_result', studentId=student.studentId) }}"
+        ><button type="button" class="btn btn-primary my-3">
+          Download result
+        </button></a
+      >
+      {% if teacher.teacherId == student.teacherId %}
+      <a href="{{ url_for('edit_result', studentId=student.studentId) }}"
+        ><button type="button" class="btn btn-primary my-3">
+          Update result
+        </button></a
+      >
+      {% else %}
+      <button type="button" class="btn btn-primary my-3" disabled>
+        Update result
+      </button>
+      {% endif %}
+    </div>
+  </form>
+</div>
+
+{% endblock %}

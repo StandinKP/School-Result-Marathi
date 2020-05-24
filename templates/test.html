@@ -1,0 +1,221 @@
+{% extends 'layout.html' %} {% block body %}
+<style>
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  .form-control {
+    height: 17px;
+  }
+
+  .grade {
+    width: 55px;
+  }
+
+  .subject {
+    width: 160px;
+  }
+
+  .srno {
+    width: 50px;
+  }
+
+  td,
+  th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+</style>
+
+<div class="container mt-4 mb-2">
+  <form action="" method="post">
+    <div>
+      <span class="form-group mb-3">
+        <span class="input-group input-group alternative">
+          <span class="input-group-text" style="height: 17px;"
+            >विद्यार्थाचे नाव:</span
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="name"
+            placeholder="संपूर्ण नाव"
+          />
+        </span>
+      </span>
+    </div>
+
+    <div class="card mt-4">
+      <table>
+        <tr>
+          <th class="srno">अ.क्र.</th>
+          <th class="subject">विषय</th>
+          <th class="grade">श्रेणी</th>
+          <th>वर्णनात्मक नोंदी</th>
+        </tr>
+        <tr>
+          <td class="srno">१</td>
+          <td class="subject">मराठी</td>
+          <td class="grade">
+            <div class="form-group mb-3">
+              <div class="input-group input-group alternative">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="marathi"
+                  placeholder="श्रेणी"
+                />
+              </div>
+            </div>
+          </td>
+          <td>Germany</td>
+        </tr>
+        <tr>
+          <td class="srno">२</td>
+          <td class="subject">हिन्दी</td>
+          <td class="grade">
+            <div class="form-group mb-3">
+              <div class="input-group input-group alternative">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="hindi"
+                  placeholder="श्रेणी"
+                />
+              </div>
+            </div>
+          </td>
+          <td>Mexico</td>
+        </tr>
+        <tr>
+          <td class="srno">३</td>
+          <td class="subject">इंग्रजी</td>
+          <td class="grade">
+            <div class="form-group mb-3">
+              <div class="input-group input-group alternative">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="english"
+                  placeholder="श्रेणी"
+                />
+              </div>
+            </div>
+          </td>
+          <td>Austria</td>
+        </tr>
+        <tr>
+          <td class="srno">४</td>
+          <td class="subject">गणित</td>
+          <td class="grade">
+            <div class="form-group mb-3">
+              <div class="input-group input-group alternative">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="maths"
+                  placeholder="श्रेणी"
+                />
+              </div>
+            </div>
+          </td>
+          <td>UK</td>
+        </tr>
+        <tr>
+          <td class="srno">५</td>
+          <td class="subject">परिसर अभ्यास १/सा. विज्ञान</td>
+          <td class="grade">
+            <div class="form-group mb-3">
+              <div class="input-group input-group alternative">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="s_science"
+                  placeholder="श्रेणी"
+                />
+              </div>
+            </div>
+          </td>
+          <td>Canada</td>
+        </tr>
+        <tr>
+          <td class="srno">६</td>
+          <td class="subject">परिसर अभ्यास २/सामाजिकशास्त्र</td>
+          <td class="grade">
+            <div class="form-group mb-3">
+              <div class="input-group input-group alternative">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="sociology"
+                  placeholder="श्रेणी"
+                />
+              </div>
+            </div>
+          </td>
+          <td>Italy</td>
+        </tr>
+        <tr>
+          <td class="srno">७</td>
+          <td class="subject">कला</td>
+          <td class="grade">
+            <div class="form-group mb-3">
+              <div class="input-group input-group alternative">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="art"
+                  placeholder="श्रेणी"
+                />
+              </div>
+            </div>
+          </td>
+          <td>Italy</td>
+        </tr>
+        <tr>
+          <td class="srno">८</td>
+          <td class="subject">कार्यानुभव</td>
+          <td class="grade">
+            <div class="form-group mb-3">
+              <div class="input-group input-group alternative">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="work_experience"
+                  placeholder="श्रेणी"
+                />
+              </div>
+            </div>
+          </td>
+          <td>Italy</td>
+        </tr>
+        <tr>
+          <td class="srno">९</td>
+          <td class="subject">शा. शिक्षण व आरोग्य शिक्षण</td>
+          <td class="grade">
+            <div class="form-group mb-3">
+              <div class="input-group input-group alternative">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="physical_edu"
+                  placeholder="श्रेणी"
+                />
+              </div>
+            </div>
+          </td>
+          <td>Italy</td>
+        </tr>
+      </table>
+    </div>
+    <hr class="mt-2" />
+    <div class="form-group text-center">
+      <input type="submit" value="Add Result" class="btn btn-primary my-3" />
+    </div>
+  </form>
+</div>
+
+{% endblock %}
