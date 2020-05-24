@@ -17,6 +17,13 @@
             value="{{ student.name }}"
             readonly
           />
+          <span class="input-group-text" style="height: 17px;">इयत्ता:</span>
+          <input
+            type="text"
+            class="form-control"
+            value="{{ student.standard }}"
+            readonly
+          />
         </span>
       </span>
     </div>
@@ -42,7 +49,7 @@
                         class="form-control"
                         readonly
                         name="marathi"
-                        value="{{ student.grade.0.marathi }}"
+                        value="{{ student.grade.marathi }}"
                       />
                     </div>
                   </div>
@@ -59,7 +66,7 @@
                         class="form-control"
                         readonly
                         name="hindi"
-                        value="{{ student.grade.1.hindi }}"
+                        value="{{ student.grade.hindi }}"
                       />
                     </div>
                   </div>
@@ -76,7 +83,7 @@
                         class="form-control"
                         readonly
                         name="english"
-                        value="{{ student.grade.2.english }}"
+                        value="{{ student.grade.english }}"
                       />
                     </div>
                   </div>
@@ -93,7 +100,7 @@
                         class="form-control"
                         readonly
                         name="maths"
-                        value="{{ student.grade.3.maths }}"
+                        value="{{ student.grade.maths }}"
                       />
                     </div>
                   </div>
@@ -110,7 +117,7 @@
                         class="form-control"
                         readonly
                         name="s_science"
-                        value="{{ student.grade.4.s_science }}"
+                        value="{{ student.grade.s_science }}"
                       />
                     </div>
                   </div>
@@ -127,7 +134,7 @@
                         class="form-control"
                         readonly
                         name="sociology"
-                        value="{{ student.grade.5.sociology }}"
+                        value="{{ student.grade.sociology }}"
                       />
                     </div>
                   </div>
@@ -144,7 +151,7 @@
                         class="form-control"
                         readonly
                         name="art"
-                        value="{{ student.grade.6.art }}"
+                        value="{{ student.grade.art }}"
                       />
                     </div>
                   </div>
@@ -161,7 +168,7 @@
                         class="form-control"
                         readonly
                         name="work_experience"
-                        value="{{ student.grade.7.work_experience }}"
+                        value="{{ student.grade.work_experience }}"
                       />
                     </div>
                   </div>
@@ -178,7 +185,7 @@
                         class="form-control"
                         readonly
                         name="physical_edu"
-                        value="{{ student.grade.8.physical_edu }}"
+                        value="{{ student.grade.physical_edu }}"
                       />
                     </div>
                   </div>

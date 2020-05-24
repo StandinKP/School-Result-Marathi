@@ -31,10 +31,20 @@
         <div class="form-group mb-3">
           <div class="input-group input-group alternative">
             <div class="input-group-text name" style="height: 17px;">
-              <h3>
-                विद्यार्थाचे नाव:
-                <span class="underline"> {{ student.name }}</span>
-              </h3>
+              विद्यार्थाचे नाव:
+              <span class="underline"> {{ student.name }}</span>
+              <br /><br /><br />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="justify-content-left">
+        <div class="form-group mb-3">
+          <div class="input-group input-group alternative">
+            <div class="input-group-text name mt-4" style="height: 17px;">
+              इयत्ता:
+              <span> {{ student.standard }}</span>
+              <br /><br /><br />
             </div>
           </div>
         </div>
@@ -56,7 +66,7 @@
                   <td class="grade">
                     <div class="form-group mb-3">
                       <div class="input-group input-group alternative">
-                        {{ student.grade.0.marathi }}
+                        {{ student.grade.marathi }}
                       </div>
                     </div>
                   </td>
@@ -67,7 +77,7 @@
                   <td class="grade">
                     <div class="form-group mb-3">
                       <div class="input-group input-group alternative">
-                        {{ student.grade.1.hindi }}
+                        {{ student.grade.hindi }}
                       </div>
                     </div>
                   </td>
@@ -78,7 +88,7 @@
                   <td class="grade">
                     <div class="form-group mb-3">
                       <div class="input-group input-group alternative">
-                        {{ student.grade.2.english }}
+                        {{ student.grade.english }}
                       </div>
                     </div>
                   </td>
@@ -89,7 +99,7 @@
                   <td class="grade">
                     <div class="form-group mb-3">
                       <div class="input-group input-group alternative">
-                        {{ student.grade.3.maths }}
+                        {{ student.grade.maths }}
                       </div>
                     </div>
                   </td>
@@ -100,7 +110,7 @@
                   <td class="grade">
                     <div class="form-group mb-3">
                       <div class="input-group input-group alternative">
-                        {{ student.grade.4.s_science }}
+                        {{ student.grade.s_science }}
                       </div>
                     </div>
                   </td>
@@ -111,7 +121,7 @@
                   <td class="grade">
                     <div class="form-group mb-3">
                       <div class="input-group input-group alternative">
-                        {{ student.grade.5.sociology }}
+                        {{ student.grade.sociology }}
                       </div>
                     </div>
                   </td>
@@ -122,7 +132,7 @@
                   <td class="grade">
                     <div class="form-group mb-3">
                       <div class="input-group input-group alternative">
-                        {{ student.grade.6.art }}
+                        {{ student.grade.art }}
                       </div>
                     </div>
                   </td>
@@ -133,7 +143,7 @@
                   <td class="grade">
                     <div class="form-group mb-3">
                       <div class="input-group input-group alternative">
-                        {{ student.grade.7.work_experience }}
+                        {{ student.grade.work_experience }}
                       </div>
                     </div>
                   </td>
@@ -144,7 +154,7 @@
                   <td class="grade">
                     <div class="form-group mb-3">
                       <div class="input-group input-group alternative">
-                        {{ student.grade.8.physical_edu }}
+                        {{ student.grade.physical_edu }}
                       </div>
                     </div>
                   </td>

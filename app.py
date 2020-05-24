@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, make_response, json, url_for, flash, request, session, logging, jsonify
 from flask_bcrypt import Bcrypt
 from flask_pymongo import PyMongo
+from flask_mail import Mail, Message
 from datetime import datetime, timedelta
 from pymongo.errors import DuplicateKeyError
 import os
@@ -20,15 +21,19 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
 
 
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
-app.config["MONGO_URI"] = "mongodb://localhost:27017/school"
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+app.config.from_pyfile('config.cfg')
+
 
 
 mongo = PyMongo(app)
 bcrypt = Bcrypt(app)
+mail = Mail(app)
 CORS(app)
 ip = socket.gethostbyname(socket.gethostname())
-print(ip)
 
 s = URLSafeTimedSerializer(os.getenv('SECRET_KEY'))
 
@@ -90,6 +95,7 @@ def register():
                     "email": request.form['email'],
                     "password": hashed_password,
                     "profile_pic": default_pic,
+                    "type": "teacher"
                 })
 
                 flash('Your account has been created! Please login!', 'success')
@@ -123,14 +129,12 @@ def login():
 
             return redirect(next_page) if next_page else redirect(url_for('index'))
 
-            # elif user['verified']== False:
-            #     flash('Please verify email first before login.', 'danger')
             return redirect(url_for('login'))
 
         else:
             flash('Login Unsuccessful. Please check username and password', 'danger')
 
-    return render_template('login.html')
+    return render_template('login.html', title='Login')
 
 
 @app.route("/logout/")
@@ -197,7 +201,7 @@ def account(username):
 
         return render_template('account.html', title='Account', profile_pic=profile_pic, user=user)
     user = mongo.db.users.find_one({"username": username})
-    return render_template('account.html', user=user)
+    return render_template('account.html', title='Profile', user=user)
 
 
 
@@ -209,26 +213,27 @@ def add_result():
         mongo.db.students.insert_one({
             "studentId": str(randint(11111111, 99999999)),
             "name": request.form['name'],
+            "standard": request.form['standard'],
             "teacherId": teacher['teacherId'], 
             "progress": request.form['progress'], 
             "talents": request.form['talents'], 
             "improvements": request.form['improvements'], 
-            "grade": [
-                {'marathi': request.form['marathi']},
-                {'hindi': request.form['hindi']},
-                {'english': request.form['english']},
-                {'maths': request.form['maths']},
-                {'s_science': request.form['s_science']},
-                {'sociology': request.form['sociology']},
-                {'art': request.form['art']},
-                {'work_experience': request.form['work_experience']},
-                {'physical_edu': request.form['physical_edu']}
-            ]})
+            "grade": 
+                {'marathi': request.form['marathi'],
+                'hindi': request.form['hindi'],
+                'english': request.form['english'],
+                'maths': request.form['maths'],
+                's_science': request.form['s_science'],
+                'sociology': request.form['sociology'],
+                'art': request.form['art'],
+                'work_experience': request.form['work_experience'],
+                'physical_edu': request.form['physical_edu']}
+            })
 
         flash("New result added", 'success')
         return redirect(url_for('index'))
 
-    return render_template('add_result.html')
+    return render_template('add_result.html', title='New Result')
 
 
 @app.route('/view_result/<studentId>')
@@ -236,7 +241,7 @@ def view_result(studentId):
     student = mongo.db.students.find_one({"studentId": studentId})
     teacher = mongo.db.users.find_one({"teacherId": student['teacherId']})
 
-    return render_template('view_result.html', student=student, teacher=teacher)
+    return render_template('view_result.html', title='View Result', student=student, teacher=teacher)
 
 @app.route('/edit_result/<studentId>/', methods=['GET', 'POST'])
 @login_required
@@ -249,17 +254,17 @@ def edit_result(studentId):
                     "progress": request.form['progress'], 
                     "talents": request.form['talents'], 
                     "improvements": request.form['improvements'],
-                    "grade": [
-                        {'marathi': request.form['marathi']},
-                        {'hindi': request.form['hindi']},
-                        {'english': request.form['english']},
-                        {'maths': request.form['maths']},
-                        {'s_science': request.form['s_science']},
-                        {'sociology': request.form['sociology']},
-                        {'art': request.form['art']},
-                        {'work_experience': request.form['work_experience']},
-                        {'physical_edu': request.form['physical_edu']}
-                    ]}})
+                    "grade": 
+                        {'marathi': request.form['marathi'],
+                        'hindi': request.form['hindi'],
+                        'english': request.form['english'],
+                        'maths': request.form['maths'],
+                        's_science': request.form['s_science'],
+                        'sociology': request.form['sociology'],
+                        'art': request.form['art'],
+                        'work_experience': request.form['work_experience'],
+                        'physical_edu': request.form['physical_edu']}
+                    }})
         flash("Result updated", 'success')
         return redirect(url_for('view_result', studentId=studentId))
     return render_template('edit_result.html', student=student)
@@ -301,7 +306,40 @@ def download_all():
 
     return response
 
+@app.route('/forgot_password/', methods=['GET', 'POST'])
+def forgot_password():
+    if request.method == 'POST':
+        email = request.form['email']
+        token = s.dumps(email, salt='change-password')
 
+        msg = Message("Change password", recipients=[email])
+        link = url_for('change_password', token=token, _external=True)
+        msg.html = '''<h1>Change your password!</h1>
+                   <a href=" '''+ link + ''' "><button class="btn btn-primary">Change password</button></a>'''
+        mail.send(msg)
+        flash('Link to change password has been sent to your email. Please check your email', 'info')
+        return redirect(url_for("login"))
+
+    return render_template('forgot_password.html')
+
+@app.route('/change_password/<token>', methods=['GET', 'POST'])
+def change_password(token):
+    if request.method == 'POST':
+        try:
+            email = s.loads(token, salt='change-password', max_age=900)
+            if request.form['password'] == request.form['confirm_password']:
+                hash_password = bcrypt.generate_password_hash(request.form['password']).decode('utf-8')
+                mongo.db.users.update_one({'email': email}, {'$set': {'password': hash_password}})
+                flash("Your password has been changed. You can login now!", 'success')
+                return redirect(url_for("login"))
+            else:
+                flash("Wrong password entered in both fields!", 'danger')
+
+        except SignatureExpired or BadTimeSignature:
+            flash('Your password couldn\'t be changed. Please try again!', 'danger')
+            return redirect(url_for('change_password', token=token))
+
+    return render_template('change_password.html', title='Change Password')
 
 if __name__ == '__main__':
     app.run(debug=True,port=80,host='0.0.0.0')

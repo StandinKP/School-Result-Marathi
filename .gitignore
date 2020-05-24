@@ -1,3 +1,4 @@
 .env
 /.vscode
 /static/result/*
+config.cfg

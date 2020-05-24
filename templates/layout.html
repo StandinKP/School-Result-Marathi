@@ -35,7 +35,11 @@
       crossorigin="anonymous"
     ></script>
 
-    <title>Chatime</title>
+    {% if title %}
+    <title>Result - {{ title }}</title>
+    {% else %}
+    <title>Result</title>
+    {% endif %}
   </head>
   <body>
     <!-- Navbar -->
