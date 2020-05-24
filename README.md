@@ -10,6 +10,7 @@ This webapp can be used to create results for the students in your class. Just r
 
 ## Authors
 
-- **Kaushal Phulgirkar** - _Initial work_ - [StandinKP](https://github.com/StandinKP)
+- **Kaushal Phulgirkar** -- [StandinKP](https://github.com/StandinKP)
+- **Vallabh Hake** -- [meetyourvallabh](https://github.com/meetyourvallabh)
 
 See also the list of [contributors](https://github.com/StandinKP/School-Result-Marathi/contributors) who participated in this project.
