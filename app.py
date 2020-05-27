@@ -28,7 +28,7 @@ import string
 
 # wkhtmltopdf config
 config = pdfkit.configuration(
-    wkhtmltopdf="C:\Program Files\wkhtmltopdf\\bin\wkhtmltopdf.exe"
+    wkhtmltopdf="/usr/local/bin/wkhtmltopdf"
 )
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -52,7 +52,8 @@ mongo = PyMongo(app)
 bcrypt = Bcrypt(app)
 mail = Mail(app)
 CORS(app)
-ip = socket.gethostbyname(socket.gethostname())
+#ip = socket.gethostbyname(socket.gethostname())
+ip = "school.vallabh.tech"
 s = URLSafeTimedSerializer(app.config["SECRET_KEY"])
 
 # Middleware
@@ -338,7 +339,7 @@ def download_result(studentId):
     path = os.path.abspath(basedir + "/static/result/" + session["teacherId"])
 
     pdf = pdfkit.from_string(rendered, False, css=css, configuration=config)
-
+    #pdf = pdfkit.from_string(rendered, False, css=css)
     response = make_response(pdf)
     response.headers["Content-Type"] = "application/pdf"
     response.headers["Content-Disposition"] = (
@@ -356,7 +357,7 @@ def download_all():
     css = ["static/css/main.css"]
     rendered = render_template("result.html", ip=ip, students=students, teacher=teacher)
     pdf = pdfkit.from_string(rendered, False, css=css, configuration=config)
-
+    #pdf = pdfkit.from_string(rendered, False, css=css)
     response = make_response(pdf)
     response.headers["Content-Type"] = "application/pdf"
     response.headers["Content-Disposition"] = (
@@ -415,4 +416,4 @@ def change_password(token):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=80, host="0.0.0.0")
+    app.run(host="0.0.0.0")
