@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@1,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- FontAwesome -->
+    <script
+      src="https://kit.fontawesome.com/c26227c439.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <title>Chatime</title>
+  </head>
+  <body>
+    <div class="container mt-4 mb-2 text-center">
+      <div class="justify-content-center text-center">
+        <h1 class="display-4 mt-3 bg-light">{{ teacher.school_name }}</h1>
+      </div>
+
+      <table class="table">
+        <tr>
+          <td>
+            <table class="table table-striped table-bordered">
+              <tr>
+                <th class="srno">अ.क्र.</th>
+                <th class="subject">विद्ययार्थयाचे नाव</th>
+                <th class="grade"></th>
+              </tr>
+              {%for student in students%}
+
+              <tr>
+                <td class="srno">{{loop.index}}</td>
+                <td class="subject">
+                  <a
+                    href="http://{{ip}}{{url_for('view_result',studentId=student.studentId)}}"
+                    >{{student.name}}</a
+                  >
+                </td>
+                <td class="grade">
+                  <div class="form-group mb-3">
+                    <div class="input-group input-group alternative">
+                      <a
+                        href="http://{{ip}}{{url_for('view_result',studentId=student.studentId)}}"
+                        ><button class="btn btn-primary">
+                          View Result
+                        </button></a
+                      >
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              {%endfor%}
+            </table>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>
+
+{%for student in students%}
+<tr>
+  <td>{{loop.index}}</td>
+  <td>
+    <a
+      href="http://{{ip}}{{url_for('view_result',studentId=student.studentId)}}"
+      >{{student.name}}</a
+    >
+  </td>
+  <td>
+    <a
+      href="http://{{ip}}{{url_for('view_result',studentId=student.studentId)}}"
+      ><button class="btn btn-primary">View Result</button></a
+    >
+  </td>
+</tr>
+{%endfor%}

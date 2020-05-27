@@ -28,7 +28,7 @@ import string
 
 # wkhtmltopdf config
 config = pdfkit.configuration(
-    wkhtmltopdf="/usr/local/bin/wkhtmltopdf"
+    wkhtmltopdf="C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe"
 )
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -52,7 +52,6 @@ mongo = PyMongo(app)
 bcrypt = Bcrypt(app)
 mail = Mail(app)
 CORS(app)
-#ip = socket.gethostbyname(socket.gethostname())
 ip = "school.vallabh.tech"
 s = URLSafeTimedSerializer(app.config["SECRET_KEY"])
 
@@ -64,50 +63,24 @@ def login_required(f):
         if "logged_in" in session:
             return f(*args, **kwargs)
         else:
-            flash("Unauthorized, Please login", "danger")
+            flash("Please login first", "danger")
             return redirect(url_for("login"))
 
     return wrap
 
 
-# For saving profile save_picture
-def random_chars(y):
-    return "".join(choice(string.ascii_letters) for x in range(y))
-
-
-def save_picture(form_picture):
-    random_hex = random_chars(12)
-    _, f_ext = os.path.splitext(form_picture.filename)
-    picture_fn = random_hex + f_ext
-    picture_path = os.path.join(
-        app.root_path, "static/img/" + session["username"], picture_fn
-    )
-    output_size = (125, 125)
-    i = Image.open(form_picture)
-    i.thumbnail(output_size)
-    i.save(picture_path)
-
-    return url_for("static", filename="img/" + picture_fn)
-
-
 # Routes
+
+# Index
 @app.route("/")
+@login_required
 def index():
-    if "logged_in" in session:
-        teacher = mongo.db.users.find_one({"username": session["username"]})
-        students = mongo.db.students.find({"teacherId": teacher["teacherId"]})
-        students_count = mongo.db.students.count_documents(
-            {"teacherId": teacher["teacherId"]}
-        )
-
-    else:
-        flash("Please login first", "warning")
-        return redirect(url_for("login"))
-    return render_template(
-        "index.html", students=students, teacher=teacher, students_count=students_count
-    )
+    teacher = mongo.db.users.find_one({"username": session["username"]})
+    standards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    return render_template("index.html", standards=standards, teacher=teacher)
 
 
+# Register
 @app.route("/register/", methods=["GET", "POST"])
 def register():
     if "logged_in" in session:
@@ -115,13 +88,13 @@ def register():
 
     default_pic = url_for("static", filename="img/default.jpg")
     if request.method == "POST":
-        user = mongo.db.users.find_one({"username": request.form["username"]})
+        # user = mongo.db.users.find_one({"username": request.form["username"]})
         user1 = mongo.db.users.find_one({"email": request.form["email"]})
-        if user:
-            flash("Username already taken", "danger")
-            return redirect(url_for("register"))
+        # if user:
+        #     flash("Username already taken", "danger")
+        #     return redirect(url_for("register"))
 
-        elif user1:
+        if user1:
             flash("Email already taken", "danger")
             return redirect(url_for("register"))
 
@@ -131,6 +104,11 @@ def register():
             ).decode("utf-8")
 
             try:
+                username = (
+                    request.form["fname"][0:3]
+                    + str(randint(111, 999))
+                    + request.form["lname"][0:2]
+                )
                 mongo.db.users.insert_one(
                     {
                         "teacherId": request.form["fname"][0:3]
@@ -138,7 +116,7 @@ def register():
                         + str(randint(111, 999)),
                         "fname": request.form["fname"],
                         "lname": request.form["lname"],
-                        "username": request.form["username"],
+                        "username": username,
                         "school_name": request.form["school_name"],
                         "email": request.form["email"],
                         "password": hashed_password,
@@ -148,7 +126,6 @@ def register():
                 )
 
                 flash("Your account has been created! Please login!", "success")
-
                 return redirect(url_for("login"))
 
             except DuplicateKeyError:
@@ -162,6 +139,7 @@ def register():
     return render_template("register.html", title="Register")
 
 
+# Login
 @app.route("/login/", methods=["GET", "POST"])
 def login():
     if "logged_in" in session:
@@ -175,6 +153,8 @@ def login():
         ):
             session["logged_in"] = True
             session["username"] = request.form["username"]
+            session["fname"] = user["fname"]
+            session["lname"] = user["lname"]
 
             session["profile_pic"] = user["profile_pic"]
             session["teacherId"] = user["teacherId"]
@@ -190,6 +170,7 @@ def login():
     return render_template("login.html", title="Login")
 
 
+# Logout
 @app.route("/logout/")
 @login_required
 def logout():
@@ -197,22 +178,17 @@ def logout():
     return redirect(url_for("index"))
 
 
+# Account
 @app.route("/account/<username>/", methods=["GET", "POST"])
 def account(username):
     if "logged_in" in session:
         old_user = mongo.db.users.find_one({"username": session["username"]})
 
         if request.method == "POST" and username == session["username"]:
-            picture = request.files["picture"]
             email = request.form["email"]
             fname = request.form["fname"]
             lname = request.form["lname"]
-
-            if picture:
-                profile_pic = save_picture(picture)
-
-            else:
-                profile_pic = session["profile_pic"]
+            school_name = request.form["school_name"]
 
             mongo.db.users.update_one(
                 {"username": session["username"]},
@@ -220,8 +196,8 @@ def account(username):
                     "$set": {
                         "fname": fname,
                         "lname": lname,
-                        "profile_pic": profile_pic,
                         "email": email,
+                        "school_name": school_name,
                     }
                 },
             )
@@ -230,7 +206,6 @@ def account(username):
 
             session["username"] = new_user["username"]
             session["email"] = new_user["email"]
-            session["profile_pic"] = new_user["profile_pic"]
             flash("Account updated!", "success")
 
             return redirect(url_for("account", username=session["username"]))
@@ -241,8 +216,7 @@ def account(username):
             session["email"] = user["email"]
             session["profile_pic"] = user["profile_pic"]
 
-        new_user = mongo.db.users.find_one({"username": session["username"]})
-        profile_pic = new_user["profile_pic"]
+        profile_pic = session["profile_pic"]
 
         return render_template(
             "account.html", title="Account", profile_pic=profile_pic, user=user
@@ -251,16 +225,17 @@ def account(username):
     return render_template("account.html", title="Profile", user=user)
 
 
-@app.route("/add_result", methods=["GET", "POST"])
+# Add new result
+@app.route("/add_result/<standard>", methods=["GET", "POST"])
 @login_required
-def add_result():
+def add_result(standard):
     if request.method == "POST":
         teacher = mongo.db.users.find_one({"username": session["username"]})
         mongo.db.students.insert_one(
             {
                 "studentId": str(randint(11111111, 99999999)),
                 "name": request.form["name"],
-                "standard": request.form["standard"],
+                "standard": standard,
                 "teacherId": teacher["teacherId"],
                 "progress": request.form["progress"],
                 "talents": request.form["talents"],
@@ -282,19 +257,41 @@ def add_result():
         flash("New result added", "success")
         return redirect(url_for("index"))
 
-    return render_template("add_result.html", title="New Result")
+    return render_template("add_result.html", title="New Result", standard=standard)
 
 
+# View single result
 @app.route("/view_result/<studentId>")
 def view_result(studentId):
     student = mongo.db.students.find_one({"studentId": studentId})
     teacher = mongo.db.users.find_one({"teacherId": student["teacherId"]})
 
     return render_template(
-        "view_result.html", title="View Result", student=student, teacher=teacher
+        "view_result.html",
+        title="View Result",
+        student=student,
+        teacher=teacher,
+        studentId=studentId,
     )
 
 
+# View results of a standard
+@app.route("/result/<standard>")
+@login_required
+def method_name(standard):
+    teacher = mongo.db.users.find_one({"username": session["username"]})
+    students = mongo.db.students.find({"standard": standard})
+    students_count = mongo.db.students.count_documents({"standard": standard})
+    return render_template(
+        "result.html",
+        students=students,
+        teacher=teacher,
+        students_count=students_count,
+        standard=standard,
+    )
+
+
+# Edit a result
 @app.route("/edit_result/<studentId>/", methods=["GET", "POST"])
 @login_required
 def edit_result(studentId):
@@ -328,6 +325,15 @@ def edit_result(studentId):
     return render_template("edit_result.html", student=student)
 
 
+# Delete result
+@app.route("/delete_result/<studentId>")
+def delete_result(studentId):
+    mongo.db.students.delete_one({"studentId": studentId})
+    flash("Result successfully removed", "success")
+    return redirect(url_for("index"))
+
+
+# Download single result
 @app.route("/download_result/<studentId>/", methods=["GET", "POST"])
 @login_required
 def download_result(studentId):
@@ -339,7 +345,6 @@ def download_result(studentId):
     path = os.path.abspath(basedir + "/static/result/" + session["teacherId"])
 
     pdf = pdfkit.from_string(rendered, False, css=css, configuration=config)
-    #pdf = pdfkit.from_string(rendered, False, css=css)
     response = make_response(pdf)
     response.headers["Content-Type"] = "application/pdf"
     response.headers["Content-Disposition"] = (
@@ -349,15 +354,17 @@ def download_result(studentId):
     return response
 
 
-@app.route("/download_all/", methods=["GET", "POST"])
-def download_all():
-    students = mongo.db.students.find({"teacherId": session["teacherId"]})
+# Download all results
+@app.route("/download_all/<standard>", methods=["GET", "POST"])
+def download_all(standard):
+    students = mongo.db.students.find({"standard": standard})
     teacher = mongo.db.users.find_one({"username": session["username"]})
 
     css = ["static/css/main.css"]
-    rendered = render_template("result.html", ip=ip, students=students, teacher=teacher)
+    rendered = render_template(
+        "download_all.html", ip=ip, students=students, teacher=teacher
+    )
     pdf = pdfkit.from_string(rendered, False, css=css, configuration=config)
-    #pdf = pdfkit.from_string(rendered, False, css=css)
     response = make_response(pdf)
     response.headers["Content-Type"] = "application/pdf"
     response.headers["Content-Disposition"] = (
@@ -367,6 +374,7 @@ def download_all():
     return response
 
 
+# Forgot password mail
 @app.route("/forgot_password/", methods=["GET", "POST"])
 def forgot_password():
     if request.method == "POST":
@@ -391,6 +399,7 @@ def forgot_password():
     return render_template("forgot_password.html")
 
 
+# Change password
 @app.route("/change_password/<token>", methods=["GET", "POST"])
 def change_password(token):
     if request.method == "POST":
@@ -415,5 +424,7 @@ def change_password(token):
     return render_template("change_password.html", title="Change Password")
 
 
+# End routes
+
 if __name__ == "__main__":
-    app.run(host="0.0.0.0")
+    app.run(debug=True, host="0.0.0.0")

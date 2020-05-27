@@ -11,260 +11,254 @@
           <input
             type="text"
             class="form-control"
+            style="height: 17px;"
             name="name"
             placeholder="संपूर्ण नाव"
           />
           <span class="input-group-text" style="height: 17px;">इयत्ता:</span>
-          <select name="standard">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-          </select>
+          <input
+            type="text"
+            class="form-control bg-white"
+            style="height: 17px;"
+            value="{{ standard }}"
+            readonly
+          />
         </span>
       </span>
     </div>
 
-    <div class="card mt-4">
-      <table>
-        <tr>
-          <td>
-            <table>
-              <tr>
-                <th class="srno">अ.क्र.</th>
-                <th class="subject">विषय</th>
-                <th class="grade">श्रेणी</th>
-              </tr>
-              <tr>
-                <td class="srno">१</td>
-                <td class="subject">मराठी</td>
-                <td class="grade">
-                  <div class="form-group mb-3">
-                    <div class="input-group input-group alternative">
-                      <select name="marathi">
-                        <option value="अ-१">अ-१</option>
-                        <option value="अ-२">अ-२</option>
-                        <option value="ब-१">ब-१</option>
-                        <option value="ब-२">ब-२</option>
-                        <option value="क-१">क-१</option>
-                        <option value="क-२">क-२</option>
-                        <option value="ड-१">ड-१</option>
-                        <option value="ड-२">ड-२</option>
-                      </select>
-                    </div>
+    <table class="table">
+      <tr>
+        <td>
+          <table class="table table-striped">
+            <tr>
+              <th class="srno" scope="col">अ.क्र.</th>
+              <th class="subject" scope="col">विषय</th>
+              <th class="grade" scope="col">श्रेणी</th>
+            </tr>
+            <tr>
+              <th class="srno" scope="row">१</th>
+              <td class="subject">मराठी</td>
+              <td class="grade">
+                <div class="form-group mb-3">
+                  <div class="input-group input-group alternative">
+                    <select name="marathi">
+                      <option value="अ-१">अ-१</option>
+                      <option value="अ-२">अ-२</option>
+                      <option value="ब-१">ब-१</option>
+                      <option value="ब-२">ब-२</option>
+                      <option value="क-१">क-१</option>
+                      <option value="क-२">क-२</option>
+                      <option value="ड-१">ड-१</option>
+                      <option value="ड-२">ड-२</option>
+                    </select>
                   </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="srno">२</td>
-                <td class="subject">हिन्दी</td>
-                <td class="grade">
-                  <div class="form-group mb-3">
-                    <div class="input-group input-group alternative">
-                      <select name="hindi">
-                        <option value="अ-१">अ-१</option>
-                        <option value="अ-२">अ-२</option>
-                        <option value="ब-१">ब-१</option>
-                        <option value="ब-२">ब-२</option>
-                        <option value="क-१">क-१</option>
-                        <option value="क-२">क-२</option>
-                        <option value="ड-१">ड-१</option>
-                        <option value="ड-२">ड-२</option>
-                      </select>
-                    </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th class="srno" scope="row">२</th>
+              <td class="subject">हिन्दी</td>
+              <td class="grade">
+                <div class="form-group mb-3">
+                  <div class="input-group input-group alternative">
+                    <select name="hindi">
+                      <option value="अ-१">अ-१</option>
+                      <option value="अ-२">अ-२</option>
+                      <option value="ब-१">ब-१</option>
+                      <option value="ब-२">ब-२</option>
+                      <option value="क-१">क-१</option>
+                      <option value="क-२">क-२</option>
+                      <option value="ड-१">ड-१</option>
+                      <option value="ड-२">ड-२</option>
+                    </select>
                   </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="srno">३</td>
-                <td class="subject">इंग्रजी</td>
-                <td class="grade">
-                  <div class="form-group mb-3">
-                    <div class="input-group input-group alternative">
-                      <select name="english">
-                        <option value="अ-१">अ-१</option>
-                        <option value="अ-२">अ-२</option>
-                        <option value="ब-१">ब-१</option>
-                        <option value="ब-२">ब-२</option>
-                        <option value="क-१">क-१</option>
-                        <option value="क-२">क-२</option>
-                        <option value="ड-१">ड-१</option>
-                        <option value="ड-२">ड-२</option>
-                      </select>
-                    </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th class="srno" scope="row">३</th>
+              <td class="subject">इंग्रजी</td>
+              <td class="grade">
+                <div class="form-group mb-3">
+                  <div class="input-group input-group alternative">
+                    <select name="english">
+                      <option value="अ-१">अ-१</option>
+                      <option value="अ-२">अ-२</option>
+                      <option value="ब-१">ब-१</option>
+                      <option value="ब-२">ब-२</option>
+                      <option value="क-१">क-१</option>
+                      <option value="क-२">क-२</option>
+                      <option value="ड-१">ड-१</option>
+                      <option value="ड-२">ड-२</option>
+                    </select>
                   </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="srno">४</td>
-                <td class="subject">गणित</td>
-                <td class="grade">
-                  <div class="form-group mb-3">
-                    <div class="input-group input-group alternative">
-                      <select name="maths">
-                        <option value="अ-१">अ-१</option>
-                        <option value="अ-२">अ-२</option>
-                        <option value="ब-१">ब-१</option>
-                        <option value="ब-२">ब-२</option>
-                        <option value="क-१">क-१</option>
-                        <option value="क-२">क-२</option>
-                        <option value="ड-१">ड-१</option>
-                        <option value="ड-२">ड-२</option>
-                      </select>
-                    </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th class="srno" scope="row">४</th>
+              <td class="subject">गणित</td>
+              <td class="grade">
+                <div class="form-group mb-3">
+                  <div class="input-group input-group alternative">
+                    <select name="maths">
+                      <option value="अ-१">अ-१</option>
+                      <option value="अ-२">अ-२</option>
+                      <option value="ब-१">ब-१</option>
+                      <option value="ब-२">ब-२</option>
+                      <option value="क-१">क-१</option>
+                      <option value="क-२">क-२</option>
+                      <option value="ड-१">ड-१</option>
+                      <option value="ड-२">ड-२</option>
+                    </select>
                   </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="srno">५</td>
-                <td class="subject">परिसर अभ्यास १/सा. विज्ञान</td>
-                <td class="grade">
-                  <div class="form-group mb-3">
-                    <div class="input-group input-group alternative">
-                      <select name="s_science">
-                        <option value="अ-१">अ-१</option>
-                        <option value="अ-२">अ-२</option>
-                        <option value="ब-१">ब-१</option>
-                        <option value="ब-२">ब-२</option>
-                        <option value="क-१">क-१</option>
-                        <option value="क-२">क-२</option>
-                        <option value="ड-१">ड-१</option>
-                        <option value="ड-२">ड-२</option>
-                      </select>
-                    </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th class="srno" scope="row">५</th>
+              <td class="subject">परिसर अभ्यास १/सा. विज्ञान</td>
+              <td class="grade">
+                <div class="form-group mb-3">
+                  <div class="input-group input-group alternative">
+                    <select name="s_science">
+                      <option value="अ-१">अ-१</option>
+                      <option value="अ-२">अ-२</option>
+                      <option value="ब-१">ब-१</option>
+                      <option value="ब-२">ब-२</option>
+                      <option value="क-१">क-१</option>
+                      <option value="क-२">क-२</option>
+                      <option value="ड-१">ड-१</option>
+                      <option value="ड-२">ड-२</option>
+                    </select>
                   </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="srno">६</td>
-                <td class="subject">परिसर अभ्यास २/सामाजिकशास्त्र</td>
-                <td class="grade">
-                  <div class="form-group mb-3">
-                    <div class="input-group input-group alternative">
-                      <select name="sociology">
-                        <option value="अ-१">अ-१</option>
-                        <option value="अ-२">अ-२</option>
-                        <option value="ब-१">ब-१</option>
-                        <option value="ब-२">ब-२</option>
-                        <option value="क-१">क-१</option>
-                        <option value="क-२">क-२</option>
-                        <option value="ड-१">ड-१</option>
-                        <option value="ड-२">ड-२</option>
-                      </select>
-                    </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th class="srno" scope="row">६</th>
+              <td class="subject">परिसर अभ्यास २/सामाजिकशास्त्र</td>
+              <td class="grade">
+                <div class="form-group mb-3">
+                  <div class="input-group input-group alternative">
+                    <select name="sociology">
+                      <option value="अ-१">अ-१</option>
+                      <option value="अ-२">अ-२</option>
+                      <option value="ब-१">ब-१</option>
+                      <option value="ब-२">ब-२</option>
+                      <option value="क-१">क-१</option>
+                      <option value="क-२">क-२</option>
+                      <option value="ड-१">ड-१</option>
+                      <option value="ड-२">ड-२</option>
+                    </select>
                   </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="srno">७</td>
-                <td class="subject">कला</td>
-                <td class="grade">
-                  <div class="form-group mb-3">
-                    <div class="input-group input-group alternative">
-                      <select name="art">
-                        <option value="अ-१">अ-१</option>
-                        <option value="अ-२">अ-२</option>
-                        <option value="ब-१">ब-१</option>
-                        <option value="ब-२">ब-२</option>
-                        <option value="क-१">क-१</option>
-                        <option value="क-२">क-२</option>
-                        <option value="ड-१">ड-१</option>
-                        <option value="ड-२">ड-२</option>
-                      </select>
-                    </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th class="srno" scope="row">७</th>
+              <td class="subject">कला</td>
+              <td class="grade">
+                <div class="form-group mb-3">
+                  <div class="input-group input-group alternative">
+                    <select name="art">
+                      <option value="अ-१">अ-१</option>
+                      <option value="अ-२">अ-२</option>
+                      <option value="ब-१">ब-१</option>
+                      <option value="ब-२">ब-२</option>
+                      <option value="क-१">क-१</option>
+                      <option value="क-२">क-२</option>
+                      <option value="ड-१">ड-१</option>
+                      <option value="ड-२">ड-२</option>
+                    </select>
                   </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="srno">८</td>
-                <td class="subject">कार्यानुभव</td>
-                <td class="grade">
-                  <div class="form-group mb-3">
-                    <div class="input-group input-group alternative">
-                      <select name="work_experience">
-                        <option value="अ-१">अ-१</option>
-                        <option value="अ-२">अ-२</option>
-                        <option value="ब-१">ब-१</option>
-                        <option value="ब-२">ब-२</option>
-                        <option value="क-१">क-१</option>
-                        <option value="क-२">क-२</option>
-                        <option value="ड-१">ड-१</option>
-                        <option value="ड-२">ड-२</option>
-                      </select>
-                    </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th class="srno" scope="row">८</th>
+              <td class="subject">कार्यानुभव</td>
+              <td class="grade">
+                <div class="form-group mb-3">
+                  <div class="input-group input-group alternative">
+                    <select name="work_experience">
+                      <option value="अ-१">अ-१</option>
+                      <option value="अ-२">अ-२</option>
+                      <option value="ब-१">ब-१</option>
+                      <option value="ब-२">ब-२</option>
+                      <option value="क-१">क-१</option>
+                      <option value="क-२">क-२</option>
+                      <option value="ड-१">ड-१</option>
+                      <option value="ड-२">ड-२</option>
+                    </select>
                   </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="srno">९</td>
-                <td class="subject">शा. शिक्षण व आरोग्य शिक्षण</td>
-                <td class="grade">
-                  <div class="form-group mb-3">
-                    <div class="input-group input-group alternative">
-                      <select name="physical_edu">
-                        <option value="अ-१">अ-१</option>
-                        <option value="अ-२">अ-२</option>
-                        <option value="ब-१">ब-१</option>
-                        <option value="ब-२">ब-२</option>
-                        <option value="क-१">क-१</option>
-                        <option value="क-२">क-२</option>
-                        <option value="ड-१">ड-१</option>
-                        <option value="ड-२">ड-२</option>
-                      </select>
-                    </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th class="srno" scope="row">९</th>
+              <td class="subject">शा. शिक्षण व आरोग्य शिक्षण</td>
+              <td class="grade">
+                <div class="form-group mb-3">
+                  <div class="input-group input-group alternative">
+                    <select name="physical_edu">
+                      <option value="अ-१">अ-१</option>
+                      <option value="अ-२">अ-२</option>
+                      <option value="ब-१">ब-१</option>
+                      <option value="ब-२">ब-२</option>
+                      <option value="क-१">क-१</option>
+                      <option value="क-२">क-२</option>
+                      <option value="ड-१">ड-१</option>
+                      <option value="ड-२">ड-२</option>
+                    </select>
                   </div>
-                </td>
-              </tr>
-            </table>
-          </td>
-          <td>
-            <table>
-              <tr>
-                <th>वर्णनात्मक नोंदी</th>
-              </tr>
-              <tr>
-                <td>
-                  विशेष प्रगती
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <textarea name="progress" cols="30" rows="5"></textarea>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  आवड/ चंद (कला, क्रीडा, साहित्य)
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <textarea name="talents" cols="30" rows="5"></textarea>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  सुधारण्या आवश्यक
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <textarea name="improvements" cols="30" rows="5"></textarea>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-      </table>
-    </div>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </td>
+        <td>
+          <table class="table table-striped">
+            <tr>
+              <th>वर्णनात्मक नोंदी</th>
+            </tr>
+            <tr>
+              <td>
+                विशेष प्रगती
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <textarea name="progress" cols="30" rows="5"></textarea>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                आवड/ चंद (कला, क्रीडा, साहित्य)
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <textarea name="talents" cols="30" rows="5"></textarea>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                सुधारण्या आवश्यक
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <textarea name="improvements" cols="30" rows="5"></textarea>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
     <div class="form-group text-center">
-      <input type="submit" value="Add result" class="btn btn-primary my-3" />
+      <input type="submit" value="Create result" class="btn btn-primary my-3" />
     </div>
   </form>
 </div>

@@ -1,5 +1,5 @@
 <!-- Navbar -->
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
   <div class="container">
     <a class="navbar-brand mr-2" href="/">
       <div style="font-weight: bolder; font-size: 1.2rem;">
@@ -22,11 +22,6 @@
         <li class="nav-item active">
           <a class="nav-link" href="{{ url_for('index') }}">Home </a>
         </li>
-        {% if session.logged_in %}
-        <li class="nav-item active">
-          <a class="nav-link" href="{{ url_for('add_result') }}">Add result </a>
-        </li>
-        {% endif %}
       </ul>
 
       <ul class="navbar-nav navbar-right">
@@ -53,7 +48,7 @@
             <img
               class="rounded-circle display-pic"
               src="{{ session.profile_pic }}"
-            />Welcome, {{ session.username }}!
+            />Welcome, {{ session.fname }} {{ session.lname }}!
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="/account/{{ session.username }}"
