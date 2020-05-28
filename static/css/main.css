@@ -121,10 +121,6 @@ body {
   box-sizing: content-box;
 }
 
-.form-control {
-  height: 17px;
-}
-
 .grade {
   width: 50px;
 }
@@ -296,8 +292,8 @@ hr {
 .form-control {
   display: block;
   width: 100%;
-  height: calc(1.5em + 0.75rem + 2px);
   padding: 0.375rem 0.75rem;
+  height: 20px;
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;

@@ -146,13 +146,13 @@ def login():
         return redirect(url_for("index"))
 
     if request.method == "POST":
-        user = mongo.db.users.find_one({"username": request.form["username"]})
+        user = mongo.db.users.find_one({"email": request.form["email"]})
 
         if user and bcrypt.check_password_hash(
             user["password"], request.form["password"]
         ):
             session["logged_in"] = True
-            session["username"] = request.form["username"]
+            session["username"] = user["username"]
             session["fname"] = user["fname"]
             session["lname"] = user["lname"]
 
@@ -160,6 +160,7 @@ def login():
             session["teacherId"] = user["teacherId"]
             next_page = request.args.get("next")
 
+            flash("Login successful", "success")
             return redirect(next_page) if next_page else redirect(url_for("index"))
 
             return redirect(url_for("login"))
@@ -296,6 +297,7 @@ def method_name(standard):
 @login_required
 def edit_result(studentId):
     student = mongo.db.students.find_one({"studentId": studentId})
+
     if request.method == "POST":
         name = request.form["name"]
         mongo.db.students.update_one(
