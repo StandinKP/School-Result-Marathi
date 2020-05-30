@@ -381,23 +381,26 @@ def download_all(standard):
 def forgot_password():
     if request.method == "POST":
         email = request.form["email"]
-        token = s.dumps(email, salt="change-password")
+        if mongo.db.users.find_one({"email": email}):
+            token = s.dumps(email, salt="change-password")
 
-        msg = Message("Change password", recipients=[email])
-        link = url_for("change_password", token=token, _external=True)
-        msg.html = (
-            """<h1>Change your password!</h1>
-                   <a href=" """
-            + link
-            + """ "><button class="btn btn-primary">Change password</button></a>"""
-        )
-        mail.send(msg)
-        flash(
-            "Link to change password has been sent to your email. Please check your email",
-            "info",
-        )
-        return redirect(url_for("login"))
-
+            msg = Message("Change password", recipients=[email])
+            link = url_for("change_password", token=token, _external=True)
+            msg.html = (
+                """<h1>Change your password!</h1>
+                       <a href=" """
+                + link
+                + """ "><button class="btn btn-primary">Change password</button></a>"""
+            )
+            mail.send(msg)
+            flash(
+                "Link to change password has been sent to your email. Please check your email",
+                "info",
+            )
+            return redirect(url_for("login"))
+        else:
+            flash("No user found! Please register first", 'danger')
+            return redirect(url_for('register'))
     return render_template("forgot_password.html")
 
 
