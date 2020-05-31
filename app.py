@@ -443,4 +443,4 @@ def download_all(standard):
 # End routes
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
