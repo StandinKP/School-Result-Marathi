@@ -20,11 +20,11 @@ import os
 from functools import wraps
 from flask_cors import CORS
 from random import choice, randint
-from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadTimeSignature
 from PIL import Image
 import pdfkit
 import socket
 import string
+import random
 
 # wkhtmltopdf config
 config = pdfkit.configuration(
@@ -53,7 +53,6 @@ bcrypt = Bcrypt(app)
 mail = Mail(app)
 CORS(app)
 ip = "school.vallabh.tech"
-s = URLSafeTimedSerializer(app.config["SECRET_KEY"])
 
 # Middleware
 # Check if user logged in
@@ -69,8 +68,12 @@ def login_required(f):
     return wrap
 
 
-# Routes
+# Random String
+def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
+    return "".join(random.choice(chars) for _ in range(size))
 
+
+# Routes
 # Index
 @app.route("/")
 @login_required
@@ -88,11 +91,7 @@ def register():
 
     default_pic = url_for("static", filename="img/default.jpg")
     if request.method == "POST":
-        # user = mongo.db.users.find_one({"username": request.form["username"]})
         user1 = mongo.db.users.find_one({"email": request.form["email"]})
-        # if user:
-        #     flash("Username already taken", "danger")
-        #     return redirect(url_for("register"))
 
         if user1:
             flash("Email already taken", "danger")
@@ -169,6 +168,64 @@ def login():
             flash("Login Unsuccessful. Please check username and password", "danger")
 
     return render_template("login.html", title="Login")
+
+
+# Forgot password mail
+@app.route("/forgot_password/", methods=["GET", "POST"])
+def forgot_password():
+    if request.method == "POST":
+        email = request.form["email"]
+        user = mongo.db.users.find_one({"email": email})
+        if user:
+            token = id_generator()
+            mongo.db.users.update_one(
+                {"email": email}, {"$set": {"password_token": token}}
+            )
+            msg = Message("Change password", recipients=[email])
+            link = url_for("change_password", token=token, _external=True,)
+            msg.html = (
+                """<h1>Change your password!</h1>
+                       <a href="""
+                + link
+                + """><button>Change password</button></a>"""
+            )
+            mail.send(msg)
+            flash(
+                "Link to change password has been sent to your email. Please check your email",
+                "info",
+            )
+            return redirect(url_for("login"))
+        else:
+            flash("No user found! Please register first", "danger")
+            return redirect(url_for("register"))
+    return render_template("forgot_password.html")
+
+
+# Change password
+@app.route("/change_password/<token>/", methods=["GET", "POST"])
+def change_password(token):
+    if request.method == "POST":
+        user = mongo.db.users.find_one({"password_token": token})
+        email = user["email"]
+        if (
+            request.form["password"] == request.form["confirm_password"]
+            and token == user["password_token"]
+        ):
+            hash_password = bcrypt.generate_password_hash(
+                request.form["password"]
+            ).decode("utf-8")
+            mongo.db.users.update_one(
+                {"email": email},
+                {"$set": {"password": hash_password, "password_token": "no"}},
+            )
+            flash("Your password has been changed. You can login now!", "success")
+            return redirect(url_for("login"))
+        elif token != user["password_token"]:
+            flash("Token expired! Please click on forgot password again", "danger")
+            return redirect(url_for("login"))
+        else:
+            flash("Enter same password in both fields!", "danger")
+    return render_template("change_password.html", title="Change Password")
 
 
 # Logout
@@ -281,8 +338,12 @@ def view_result(studentId):
 @login_required
 def method_name(standard):
     teacher = mongo.db.users.find_one({"username": session["username"]})
-    students = mongo.db.students.find({"standard": standard})
-    students_count = mongo.db.students.count_documents({"standard": standard})
+    students = mongo.db.students.find(
+        {"standard": standard, "teacherId": session["teacherId"]}
+    )
+    students_count = mongo.db.students.count_documents(
+        {"standard": standard, "teacherId": session["teacherId"]}
+    )
     return render_template(
         "result.html",
         students=students,
@@ -323,8 +384,11 @@ def edit_result(studentId):
             },
         )
         flash("Result updated", "success")
-        return redirect(url_for("view_result", studentId=studentId))
-    return render_template("edit_result.html", student=student)
+        return redirect(url_for("edit_result", studentId=studentId))
+
+    grades = ["अ-१", "अ-२", "ब-१", "ब-२", "क-१", "क-२", "ड-१", "ड-२"]
+
+    return render_template("edit_result.html", student=student, grades=grades)
 
 
 # Delete result
@@ -374,59 +438,6 @@ def download_all(standard):
     )
 
     return response
-
-
-# Forgot password mail
-@app.route("/forgot_password/", methods=["GET", "POST"])
-def forgot_password():
-    if request.method == "POST":
-        email = request.form["email"]
-        if mongo.db.users.find_one({"email": email}):
-            token = s.dumps(email, salt="change-password")
-
-            msg = Message("Change password", recipients=[email])
-            link = url_for("change_password", token=token, _external=True)
-            msg.html = (
-                """<h1>Change your password!</h1>
-                       <a href=" """
-                + link
-                + """ "><button class="btn btn-primary">Change password</button></a>"""
-            )
-            mail.send(msg)
-            flash(
-                "Link to change password has been sent to your email. Please check your email",
-                "info",
-            )
-            return redirect(url_for("login"))
-        else:
-            flash("No user found! Please register first", 'danger')
-            return redirect(url_for('register'))
-    return render_template("forgot_password.html")
-
-
-# Change password
-@app.route("/change_password/<token>", methods=["GET", "POST"])
-def change_password(token):
-    if request.method == "POST":
-        try:
-            email = s.loads(token, salt="change-password", max_age=900)
-            if request.form["password"] == request.form["confirm_password"]:
-                hash_password = bcrypt.generate_password_hash(
-                    request.form["password"]
-                ).decode("utf-8")
-                mongo.db.users.update_one(
-                    {"email": email}, {"$set": {"password": hash_password}}
-                )
-                flash("Your password has been changed. You can login now!", "success")
-                return redirect(url_for("login"))
-            else:
-                flash("Wrong password entered in both fields!", "danger")
-
-        except SignatureExpired or BadTimeSignature:
-            flash("Your password couldn't be changed. Please try again!", "danger")
-            return redirect(url_for("change_password", token=token))
-
-    return render_template("change_password.html", title="Change Password")
 
 
 # End routes

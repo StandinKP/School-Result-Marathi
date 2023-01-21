@@ -1,13 +1,11 @@
-[pip install]
-
-1. flask
-2. flask_bcrypt
-3. flask_pymongo
-4. flask_mail
-5. pymongo
-6. functools
-7. flask_cors
-8. itsdangerous
-9. pillow
-10. pdfkit
-11. string
+flask
+flask_bcrypt
+flask_pymongo
+flask_mail
+pymongo
+functools
+flask_cors
+itsdangerous
+pillow
+pdfkit
+string

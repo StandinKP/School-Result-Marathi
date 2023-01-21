@@ -1,4 +1,5 @@
 {% extends 'layout.html' %} {% block body %}
+<script></script>
 
 <div class="container mt-4 mb-2">
   <form action="" method="post">
@@ -42,20 +43,13 @@
               <td class="grade">
                 <div class="form-group mb-3">
                   <div class="input-group input-group alternative">
-                    {{student.grade.marathi}}
                     <select name="marathi">
-                      <option
-                        value="{{student.grade.marathi}}"
-                        selected="selected"
-                      ></option>
-                      <option value="अ-१">अ-१</option>
-                      <option value="अ-२">अ-२</option>
-                      <option value="ब-१">ब-१</option>
-                      <option value="ब-२">ब-२</option>
-                      <option value="क-१">क-१</option>
-                      <option value="क-२">क-२</option>
-                      <option value="ड-१">ड-१</option>
-                      <option value="ड-२">ड-२</option>
+                      {% for grade in grades %} {% if grade ==
+                      student.grade.marathi %}
+                      <option value="{{grade}}" selected>{{grade}}</option>
+                      {% else %}
+                      <option value="{{grade}}">{{grade}}</option>
+                      {% endif %} {% endfor %}
                     </select>
                   </div>
                 </div>
@@ -68,14 +62,12 @@
                 <div class="form-group mb-3">
                   <div class="input-group input-group alternative">
                     <select name="hindi">
-                      <option value="अ-१">अ-१</option>
-                      <option value="अ-२">अ-२</option>
-                      <option value="ब-१">ब-१</option>
-                      <option value="ब-२">ब-२</option>
-                      <option value="क-१">क-१</option>
-                      <option value="क-२">क-२</option>
-                      <option value="ड-१">ड-१</option>
-                      <option value="ड-२">ड-२</option>
+                      {% for grade in grades %} {% if grade ==
+                      student.grade.hindi %}
+                      <option value="{{grade}}" selected>{{grade}}</option>
+                      {% else %}
+                      <option value="{{grade}}">{{grade}} </option>
+                      {% endif %} {% endfor %}
                     </select>
                   </div>
                 </div>
@@ -88,14 +80,12 @@
                 <div class="form-group mb-3">
                   <div class="input-group input-group alternative">
                     <select name="english">
-                      <option value="अ-१">अ-१</option>
-                      <option value="अ-२">अ-२</option>
-                      <option value="ब-१">ब-१</option>
-                      <option value="ब-२">ब-२</option>
-                      <option value="क-१">क-१</option>
-                      <option value="क-२">क-२</option>
-                      <option value="ड-१">ड-१</option>
-                      <option value="ड-२">ड-२</option>
+                      {% for grade in grades %} {% if grade ==
+                      student.grade.english %}
+                      <option value="{{grade}}" selected>{{grade}}</option>
+                      {% else %}
+                      <option value="{{grade}}">{{grade}} </option>
+                      {% endif %} {% endfor %}
                     </select>
                   </div>
                 </div>
@@ -108,14 +98,12 @@
                 <div class="form-group mb-3">
                   <div class="input-group input-group alternative">
                     <select name="maths">
-                      <option value="अ-१">अ-१</option>
-                      <option value="अ-२">अ-२</option>
-                      <option value="ब-१">ब-१</option>
-                      <option value="ब-२">ब-२</option>
-                      <option value="क-१">क-१</option>
-                      <option value="क-२">क-२</option>
-                      <option value="ड-१">ड-१</option>
-                      <option value="ड-२">ड-२</option>
+                      {% for grade in grades %} {% if grade ==
+                      student.grade.maths %}
+                      <option value="{{grade}}" selected>{{grade}}</option>
+                      {% else %}
+                      <option value="{{grade}}">{{grade}} </option>
+                      {% endif %} {% endfor %}
                     </select>
                   </div>
                 </div>
@@ -128,14 +116,12 @@
                 <div class="form-group mb-3">
                   <div class="input-group input-group alternative">
                     <select name="s_science">
-                      <option value="अ-१">अ-१</option>
-                      <option value="अ-२">अ-२</option>
-                      <option value="ब-१">ब-१</option>
-                      <option value="ब-२">ब-२</option>
-                      <option value="क-१">क-१</option>
-                      <option value="क-२">क-२</option>
-                      <option value="ड-१">ड-१</option>
-                      <option value="ड-२">ड-२</option>
+                      {% for grade in grades %} {% if grade ==
+                      student.grade.s_science %}
+                      <option value="{{grade}}" selected>{{grade}}</option>
+                      {% else %}
+                      <option value="{{grade}}">{{grade}} </option>
+                      {% endif %} {% endfor %}
                     </select>
                   </div>
                 </div>
@@ -148,14 +134,12 @@
                 <div class="form-group mb-3">
                   <div class="input-group input-group alternative">
                     <select name="sociology">
-                      <option value="अ-१">अ-१</option>
-                      <option value="अ-२">अ-२</option>
-                      <option value="ब-१">ब-१</option>
-                      <option value="ब-२">ब-२</option>
-                      <option value="क-१">क-१</option>
-                      <option value="क-२">क-२</option>
-                      <option value="ड-१">ड-१</option>
-                      <option value="ड-२">ड-२</option>
+                      {% for grade in grades %} {% if grade ==
+                      student.grade.sociology %}
+                      <option value="{{grade}}" selected>{{grade}}</option>
+                      {% else %}
+                      <option value="{{grade}}">{{grade}} </option>
+                      {% endif %} {% endfor %}
                     </select>
                   </div>
                 </div>
@@ -168,14 +152,12 @@
                 <div class="form-group mb-3">
                   <div class="input-group input-group alternative">
                     <select name="art">
-                      <option value="अ-१">अ-१</option>
-                      <option value="अ-२">अ-२</option>
-                      <option value="ब-१">ब-१</option>
-                      <option value="ब-२">ब-२</option>
-                      <option value="क-१">क-१</option>
-                      <option value="क-२">क-२</option>
-                      <option value="ड-१">ड-१</option>
-                      <option value="ड-२">ड-२</option>
+                      {% for grade in grades %} {% if grade == student.grade.art
+                      %}
+                      <option value="{{grade}}" selected>{{grade}}</option>
+                      {% else %}
+                      <option value="{{grade}}">{{grade}} </option>
+                      {% endif %} {% endfor %}
                     </select>
                   </div>
                 </div>
@@ -188,14 +170,12 @@
                 <div class="form-group mb-3">
                   <div class="input-group input-group alternative">
                     <select name="work_experience">
-                      <option value="अ-१">अ-१</option>
-                      <option value="अ-२">अ-२</option>
-                      <option value="ब-१">ब-१</option>
-                      <option value="ब-२">ब-२</option>
-                      <option value="क-१">क-१</option>
-                      <option value="क-२">क-२</option>
-                      <option value="ड-१">ड-१</option>
-                      <option value="ड-२">ड-२</option>
+                      {% for grade in grades %} {% if grade ==
+                      student.grade.work_experience %}
+                      <option value="{{grade}}" selected>{{grade}}</option>
+                      {% else %}
+                      <option value="{{grade}}">{{grade}} </option>
+                      {% endif %} {% endfor %}
                     </select>
                   </div>
                 </div>
@@ -208,14 +188,12 @@
                 <div class="form-group mb-3">
                   <div class="input-group input-group alternative">
                     <select name="physical_edu">
-                      <option value="अ-१">अ-१</option>
-                      <option value="अ-२">अ-२</option>
-                      <option value="ब-१">ब-१</option>
-                      <option value="ब-२">ब-२</option>
-                      <option value="क-१">क-१</option>
-                      <option value="क-२">क-२</option>
-                      <option value="ड-१">ड-१</option>
-                      <option value="ड-२">ड-२</option>
+                      {% for grade in grades %} {% if grade ==
+                      student.grade.physical_edu %}
+                      <option value="{{grade}}" selected>{{grade}}</option>
+                      {% else %}
+                      <option value="{{grade}}">{{grade}} </option>
+                      {% endif %} {% endfor %}
                     </select>
                   </div>
                 </div>
@@ -263,7 +241,7 @@
       </tr>
     </table>
     <div class="form-group text-center">
-      <input type="submit" value="Create result" class="btn btn-primary my-3" />
+      <input type="submit" value="Update result" class="btn btn-primary my-3" />
     </div>
   </form>
 </div>
